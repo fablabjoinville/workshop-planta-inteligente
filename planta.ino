@@ -32,54 +32,6 @@ int lumin = 0;
 ESP8266WiFiMulti wifi;
 DHT dht(DHTPIN, DHTTYPE);
 
-void setup() {
-  // Inicia sensor DHT11.
-  dht.begin();
-
-  // Configura WiFi.
-  wifi.addAP(NOME_REDE, SENHA);
-
-  // Define pinos de entrada e saida.
-  pinMode(LED_BUILTIN, OUTPUT); // Pino de entrada do LED.
-  pinMode(DHTPIN, INPUT); // Pino de saida do DHT11.
-  pinMode(UMIDPIN, INPUT); // Pino de saida do sensor de umidade de solo.
-
-  // Inicializa monitor serial (para analisarmos as saidas do programa na IDE).
-  Serial.begin(115200);
-  Serial.println("Setup finalizado");
-}
-
-void loop() {
-  // Le sensor de umidade do solo.
-  leUmidadeDoSolo();
-  Serial.print(" | ");
-
-  // Le sensor de temperature e umidade do ar.
-  leTemperaturaEUmidadeDoAr();
-  Serial.print(" | ");
-
-  // Le sensor de luminosidade.
-  leLuminosidade();
-  Serial.println(" | ");
-
-  // Se a WiFi esta devidamente configurada e conectada.
-  if (wifi.run() == WL_CONNECTED) {
-    // Envia dados para o ThingSpeak e espera um periodo curto de tempo.
-    atualizaThingSpeak();
-    delay(500);
-
-    // Se a umidade do solo estiver baixa (ou seja, o solo esta seco).
-    if (umidSolo == 0) {
-      // Envia alerta para IFTTT e espera um periodo curto de tempo
-      alertaIFTTT();
-      delay(300);
-    }
-  }
-
-  // Espera 3seg para executar o proximo ciclo.
-  delay(3000);
-}
-
 // Le umidade do solo do sensor conectado ao pino UMIDPIN e atualiza a variavel
 // global.
 void leUmidadeDoSolo() {
@@ -167,4 +119,52 @@ void atualizaThingSpeak() {
 
   // Mostra codigo de retorno (se foi um sucesso ou fracasso, por exemplo).
   Serial.println(String("ThingSpeak retornou HTTP CODE ") + codigoHTPP);
+}
+
+void setup() {
+  // Inicia sensor DHT11.
+  dht.begin();
+
+  // Configura WiFi.
+  wifi.addAP(NOME_REDE, SENHA);
+
+  // Define pinos de entrada e saida.
+  pinMode(LED_BUILTIN, OUTPUT); // Pino de entrada do LED.
+  pinMode(DHTPIN, INPUT); // Pino de saida do DHT11.
+  pinMode(UMIDPIN, INPUT); // Pino de saida do sensor de umidade de solo.
+
+  // Inicializa monitor serial (para analisarmos as saidas do programa na IDE).
+  Serial.begin(115200);
+  Serial.println("Setup finalizado");
+}
+
+void loop() {
+  // Le sensor de umidade do solo.
+  leUmidadeDoSolo();
+  Serial.print(" | ");
+
+  // Le sensor de temperature e umidade do ar.
+  leTemperaturaEUmidadeDoAr();
+  Serial.print(" | ");
+
+  // Le sensor de luminosidade.
+  leLuminosidade();
+  Serial.println(" | ");
+
+  // Se a WiFi esta devidamente configurada e conectada.
+  if (wifi.run() == WL_CONNECTED) {
+    // Envia dados para o ThingSpeak e espera um periodo curto de tempo.
+    atualizaThingSpeak();
+    delay(500);
+
+    // Se a umidade do solo estiver baixa (ou seja, o solo esta seco).
+    if (umidSolo == 0) {
+      // Envia alerta para IFTTT e espera um periodo curto de tempo
+      alertaIFTTT();
+      delay(300);
+    }
+  }
+
+  // Espera 3seg para executar o proximo ciclo.
+  delay(3000);
 }
