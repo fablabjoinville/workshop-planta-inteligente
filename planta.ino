@@ -158,7 +158,7 @@ void loop() {
     delay(500);
 
     // Se a umidade do solo estiver baixa (ou seja, o solo esta seco).
-    if (umidSolo == 0) {
+    if (umidSolo == 1) {
       // Envia alerta para IFTTT e espera um periodo curto de tempo
       alertaIFTTT();
       delay(300);
