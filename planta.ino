@@ -9,8 +9,8 @@
 
 // Configuracao da rede WiFi.
 const int HTTP_PORT= 80;
-const char* SSID = "<SSID>"; // ATUALIZAR
-const char* PASSWORD = "<PASSWORD>"; // ATUALIZAR
+const char* NOME_REDE = "<NOME_REDE>"; // ATUALIZAR
+const char* SENHA = "<SENHA>"; // ATUALIZAR
 
 // Configuracao do ThingSpeak.
 const char* TS_HOST = "api.thingspeak.com";
@@ -37,7 +37,7 @@ void setup() {
   dht.begin();
 
   // Configura WiFi.
-  wifi.addAP(SSID, PASSWORD);
+  wifi.addAP(NOME_REDE, SENHA);
 
   // Define pinos de entrada e saida.
   pinMode(LED_BUILTIN, OUTPUT); // Pino de entrada do LED.
@@ -130,17 +130,17 @@ void alertIFTTT() {
   String url = String(IFTTT_URL) + IFTTT_API_KEY;
 
   // Especifica servidor, porta do processo e URL de envio de dados e inicia
-  // um canal de comunicao com o servidor.
+  // um canal de comunicacao com o servidor.
   client.begin(IFTTT_HOST, HTTP_PORT, url);
 
   // Faz requisicao e guarda codigo de retorno.
-  int httpCode = client.GET();
+  int codigoHTTP = client.GET();
 
   // Fecha o canal de comunicacao com o servidor.
   client.end();
 
   // Mostra codigo de retorno (se foi um sucesso ou fracasso, por exemplo).
-  Serial.println(String("IFTTT retornou HTTP CODE ") + httpCode);
+  Serial.println(String("IFTTT retornou HTTP CODE ") + codigoHTTP);
 }
 
 // Envia dados para ThingSpeak.
@@ -155,15 +155,16 @@ void updateThingSpeak() {
     "&field3=" + lumin;
 
   // Especifica servidor, porta do processo e URL de envio de dados e inicia
-  // um canal de comunicao com o servidor.
+  // um canal de comunicacao com o servidor.
   client.begin(TS_HOST, HTTP_PORT, url);
 
   // Faz requisicao e guarda codigo de retorno.
-  int httpCode = client.GET();
+  int codigoHTTP = client.GET();
+  // Mostra codigo de retorno (se foi um sucesso ou fracasso, por exemplo).
 
   // Fecha o canal de comunicacao com o servidor.
   client.end();
 
   // Mostra codigo de retorno (se foi um sucesso ou fracasso, por exemplo).
-  Serial.println(String("ThingSpeak retornou HTTP CODE ") + httpCode);
+  Serial.println(String("ThingSpeak retornou HTTP CODE ")
 }
