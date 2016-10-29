@@ -125,26 +125,45 @@ void luminosidade(){
 // Envia alerta para o IFTTT.
 void alertIFTTT() {
   HTTPClient client;
+
+  // Constroi URL para enviar dados ao IFTTT.
   String url = String(IFTTT_URL) + IFTTT_API_KEY;
 
+  // Especifica servidor, porta do processo e URL de envio de dados e inicia
+  // um canal de comunicao com o servidor.
   client.begin(IFTTT_HOST, HTTP_PORT, url);
+
+  // Faz requisicao e guarda codigo de retorno.
   int httpCode = client.GET();
 
+  // Fecha o canal de comunicacao com o servidor.
+  client.end();
+
+  // Mostra codigo de retorno (se foi um sucesso ou fracasso, por exemplo).
   Serial.println(String("IFTTT retornou HTTP CODE ") + httpCode);
 }
 
 // Envia dados para ThingSpeak.
 void updateThingSpeak() {
   HTTPClient client;
+
+  // Constroi URL para enviar dados ao ThingSpeak, com cada dado e chave da API.
   String url = String(TS_URL) +
     "?api_key=" + TS_API_KEY +
     "&field1=" + temp +
     "&field2=" + umid_ar +
     "&field3=" + lumin;
 
+  // Especifica servidor, porta do processo e URL de envio de dados e inicia
+  // um canal de comunicao com o servidor.
   client.begin(TS_HOST, HTTP_PORT, url);
+
+  // Faz requisicao e guarda codigo de retorno.
   int httpCode = client.GET();
+
+  // Fecha o canal de comunicacao com o servidor.
   client.end();
 
+  // Mostra codigo de retorno (se foi um sucesso ou fracasso, por exemplo).
   Serial.println(String("ThingSpeak retornou HTTP CODE ") + httpCode);
 }
