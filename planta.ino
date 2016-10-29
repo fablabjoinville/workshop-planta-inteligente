@@ -24,8 +24,8 @@ const char* IFTTT_API_KEY = "<IFTTT_API_KEY>"; // ATUALIZAR
 
 // Variaveis globais, usadas para atualizar ThingSpeak e enviar alerta para
 // IFTTT.
-int umid_solo = 0;
-int umid_ar = 0;
+int umidSolo = 0;
+int umidAr = 0;
 int temp = 0;
 int lumin = 0;
 
@@ -51,27 +51,27 @@ void setup() {
 
 void loop() {
   // Le sensor de umidade do solo.
-  umidade_solo();
+  leUmidadeDoSolo();
   Serial.print(" | ");
 
   // Le sensor de temperature e umidade do ar.
-  temp_umid(); //leitura sensor temp e umid AR
+  leTemperaturaEUmidadeDoAr();
   Serial.print(" | ");
 
   // Le sensor de luminosidade.
-  luminosidade();
+  leLuminosidade();
   Serial.println(" | ");
 
   // Se a WiFi esta devidamente configurada e conectada.
   if (wifi.run() == WL_CONNECTED) {
     // Envia dados para o ThingSpeak e espera um periodo curto de tempo.
-    updateThingSpeak();
+    atualizaThingSpeak();
     delay(500);
 
     // Se a umidade do solo estiver baixa (ou seja, o solo esta seco).
-    if (umid_solo == 0) {
+    if (umidSolo == 0) {
       // Envia alerta para IFTTT e espera um periodo curto de tempo
-      alertIFTTT();
+      alertaIFTTT();
       delay(300);
     }
   }
@@ -82,9 +82,9 @@ void loop() {
 
 // Le umidade do solo do sensor conectado ao pino UMIDPIN e atualiza a variavel
 // global.
-void umidade_solo() {
+void leUmidadeDoSolo() {
   int umid = digitalRead(UMIDPIN); // Le o valor da entrada analogica.
-  umid_solo = umid; // Variavel global para atualizar ThingSpeak.
+  umidSolo = umid; // Variavel global para atualizar ThingSpeak.
   delay(300);
 
   Serial.print("Umidade do solo: ");
@@ -93,9 +93,9 @@ void umidade_solo() {
 
 // Le temperatura e umidade do ar do sensor utilizando a biblioteca do DHT e
 // atualizando a variavel global.
-void temp_umid() {
+void leTemperaturaEUmidadeDoAr() {
   float h = dht.readHumidity();
-  umid_ar = h; // Variavel global para atualizar ThingSpeak.
+  umidAr = h; // Variavel global para atualizar ThingSpeak.
   float t = dht.readTemperature();
   temp = t; // Variavel global para atualizar ThingSpeak.
   delay(300);
@@ -113,7 +113,7 @@ void temp_umid() {
   }
 }
 // Le luminosidade do sensor conectado ao pino LDRPIN atualiza a variabel global.
-void luminosidade(){
+void leLuminosidade(){
   float leitura_lumi = analogRead(LDRPIN); // Le o valor fornecido pelo LDR.
   float lumi = map(leitura_lumi, 1023, 0, 0, 1000); // Conversao para lux (aproximada).
   lumin = lumi; // Variavel global para atualizar ThingSpeak.
@@ -123,7 +123,7 @@ void luminosidade(){
 }
 
 // Envia alerta para o IFTTT.
-void alertIFTTT() {
+void alertaIFTTT() {
   HTTPClient client;
 
   // Constroi URL para enviar dados ao IFTTT.
@@ -144,14 +144,14 @@ void alertIFTTT() {
 }
 
 // Envia dados para ThingSpeak.
-void updateThingSpeak() {
+void atualizaThingSpeak() {
   HTTPClient client;
 
   // Constroi URL para enviar dados ao ThingSpeak, com cada dado e chave da API.
   String url = String(TS_URL) +
     "?api_key=" + TS_API_KEY +
     "&field1=" + temp +
-    "&field2=" + umid_ar +
+    "&field2=" + umidAr +
     "&field3=" + lumin;
 
   // Especifica servidor, porta do processo e URL de envio de dados e inicia
