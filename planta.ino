@@ -166,5 +166,5 @@ void atualizaThingSpeak() {
   client.end();
 
   // Mostra codigo de retorno (se foi um sucesso ou fracasso, por exemplo).
-  Serial.println(String("ThingSpeak retornou HTTP CODE ")
+  Serial.println(String("ThingSpeak retornou HTTP CODE ") + codigoHTPP);
 }
