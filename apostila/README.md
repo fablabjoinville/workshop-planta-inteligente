@@ -1,6 +1,41 @@
-Sumário
+# Sumário
 
-[[TOC]]
+1. [Softwares Utilizados](#softwares-utilizados)
+1.1. [Arduino IDE](#arduino-ide)
+2. [Preparativos](#preparativos)
+2.1. [Partes](#preparativos)
+2.2. [Configurações do software Arduino IDE](#configurações-do-software-arduino-ide)
+2.3. [Eletrônica](#eletrônica)
+2.4. [Código](#código)
+2.5. [O que aconteceu?](#o-que-aconteceu)
+2.6. [Portas de saida](#portas-de-saída)
+2.7. [Comandos aprendidos](#comandos-aprendidos)
+3. [Sensor de luminosidade](#sensor-de-luminosidade)
+3.1. [Partes](#partes-1)
+3.2. [Eletrônica](#eletrônica-1)
+3.3. [Código](#código-1)
+3.4. [O que aconteceu?](#o-que-aconteceu-1)
+3.5. [Comandos aprendidos](#comandos-aprendidos-1)
+4. [Sensor de umidade de solo (Higrômetro)](#sensor-de-umidade-de-solo-higrômetro)
+4.1. [Partes](#partes-2)
+4.2. [Eletrônica](#eletrônica-2)
+4.3. [Código](#código-2)
+4.4. [Considerações](#considerações)
+5. [Sensor de temperatura e umidade do ar (DHT11)](#sensor-de-temperatura-e-umidade-do-ar-dht11)
+5.1. [Partes](#partes-3)
+5.2. [Eletrônica](#eletrônica-3)
+5.3. [Código](#código-3)
+5.4. [Considerações](#considerações-1)
+6. [Circuito Completo](#circuito-completo)
+6.1. [Código](#código-4)
+7. [ThingSpeak](#thingspeak)
+7.1. [Criando e configurando uma conta no ThingSpeak](#criando-e-configurando-uma-conta-no-thingspeak)
+7.2. [Configurando WiFi](#configurando-wifi)
+7.3. [Enviando dados ao ThingSpeak](#enviando-dados-ao-thingspeak)
+8. [IFTTT](#ifttt)
+8.1. [Criando e configurando uma conta no IFTTT](#criando-e-configurando-uma-conta-no-ifttt)
+8.2. [Enviando alerta pelo IFTTT](#enviando-alerta-pelo-ifttt)
+9. [Código completo](#código-completo)
 
 # Softwares Utilizados
 
